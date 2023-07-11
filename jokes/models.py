@@ -7,7 +7,7 @@ class Joke(models.Model):
     question = models.TextField(max_length=200)
     answer = models.TextField(max_length=100, blank=True)
     slug = models.SlugField(
-        max_length=50, unique=True, null=True, editable=False
+        max_length=50, unique=True, null=False, editable=False
     )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
