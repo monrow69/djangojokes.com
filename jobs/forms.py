@@ -42,13 +42,14 @@ class JobApplicationForm(forms.Form):
     )
     employment_type = forms.ChoiceField(choices=EMPLOYMENT_TYPES)
     start_date = forms.DateField(
-        help_text='The earliest date you can start working.',
-        widget=forms.SelectDateWidget(
-            years=YEARS,
-        ),
-        validators=[validate_future_date],
-        error_messages = {'past_date': 'Please enter a future date.'}
-    )
+    help_text='The earliest date you can start working.',
+    widget=forms.SelectDateWidget(
+        years=YEARS,
+        attrs={'style': 'width: 31%; display: inline-block; margin: 0 1%'}
+    ),
+    validators=[validate_future_date],
+    error_messages={'past_date': 'Please enter a future date.'}
+)
     available_days = forms.TypedMultipleChoiceField(
         choices=DAYS,
         coerce=int,
