@@ -10,6 +10,12 @@ from .forms import JokeForm
 
 class JokeCreateView(CreateView):
     model = Joke
+    # fields = ['question', 'answer']
+    form_class = JokeForm
+
+class JokeUpdateView(UpdateView):
+    model = Joke
+    # fields = ['question', 'answer']
     form_class = JokeForm
 
 
@@ -26,6 +32,3 @@ class JokeListView(ListView):
     model = Joke
 
 
-class JokeUpdateView(UpdateView):
-    model = Joke
-    form_class = JokeForm
