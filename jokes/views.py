@@ -5,17 +5,10 @@ from django.views.generic import (
 )
 
 from .models import Joke
-
 from .forms import JokeForm
 
 class JokeCreateView(CreateView):
     model = Joke
-    # fields = ['question', 'answer']
-    form_class = JokeForm
-
-class JokeUpdateView(UpdateView):
-    model = Joke
-    # fields = ['question', 'answer']
     form_class = JokeForm
 
 
@@ -31,4 +24,8 @@ class JokeDetailView(DetailView):
 class JokeListView(ListView):
     model = Joke
 
+
+class JokeUpdateView(UpdateView):
+    model = Joke
+    form_class = JokeForm
 
