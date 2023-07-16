@@ -13,15 +13,15 @@ body {
   margin: 0 1rem;
 }
     
-  footer {
-    border-top: 1px solid darkgreen;
-  }
+footer {
+border-top: 1px solid darkgreen;
+}
   
-  header {
-    border-bottom: 1px solid darkgreen;
-  }
+header {
+  border-bottom: 1px solid darkgreen;
+}
   
-  h2 {
+h2 {
     font-style: italic;
   }
  
