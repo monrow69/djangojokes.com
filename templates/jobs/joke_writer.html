@@ -7,7 +7,6 @@
   <div class="card border-primary m-auto mb-3 p-3" style="max-width: 50rem">
     <form method="post" novalidate enctype="multipart/form-data">
       {% csrf_token %}
-      {{ form.resume|as_crispy_field }}
       <div class="form-row">
         <div class="form-group col-md-6 mb-0">
           {{ form.first_name|as_crispy_field }}
@@ -41,6 +40,7 @@
         </div>
       </div>
       {{ form.cover_letter|as_crispy_field }}
+      {{ form.resume|as_crispy_field }}
       {{ form.confirmation|as_crispy_field }}
       <button class="form-control btn btn-success">Apply</button>
     </form>
