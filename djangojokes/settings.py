@@ -43,6 +43,7 @@ INSTALLED_APPS = [
        'allauth.account',
        'allauth.socialaccount',
       'crispy_bootstrap5',
+      'private_storage',
     # Local apps
     'jobs.apps.JobsConfig',
     'common.apps.CommonConfig',
@@ -178,6 +179,10 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# private-storage settings
+PRIVATE_STORAGE_ROOT = MEDIA_ROOT / 'private/'
+PRIVATE_STORAGE_AUTH_FUNCTION = 'private_storage.permissions.allow_staff'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
