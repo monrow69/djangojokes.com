@@ -1,11 +1,9 @@
 import json
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib import messages
-
 from django.views.generic import (
     CreateView, DeleteView, DetailView, ListView, UpdateView
 )
@@ -13,28 +11,15 @@ from django.views.generic import (
 from .models import Joke, JokeVote
 from .forms import JokeForm
 
-class JokeCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
-    model = Joke
-    form_class = JokeForm
-    success_message = 'Joke created'
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
-    
-
 class JokeDeleteView(UserPassesTestMixin, DeleteView):
     model = Joke
     success_url = reverse_lazy('jokes:list')
 
     def delete(self, request, *args, **kwargs):
         result = super().delete(request, *args, **kwargs)
+        messages.success(self.request, 'Joke deleted.')
         return result
     
-    def form_valid(self, form):
-        messages.success(self.request, 'Joke deleted.')
-        return super().form_valid(form)
-
     def test_func(self):
         obj = self.get_object()
         return self.request.user == obj.user
@@ -42,6 +27,16 @@ class JokeDeleteView(UserPassesTestMixin, DeleteView):
 
 class JokeDetailView(DetailView):
     model = Joke
+
+
+class JokeCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    model = Joke
+    form_class = JokeForm
+    success_message = 'Joke created.'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class JokeListView(ListView):
@@ -52,10 +47,12 @@ class JokeUpdateView(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
     model = Joke
     form_class = JokeForm
     success_message = 'Joke updated.'
-
+    
     def test_func(self):
         obj = self.get_object()
         return self.request.user == obj.user
+
+
 def vote(request, slug):
     user = request.user # The logged-in user (or AnonymousUser).
     joke = Joke.objects.get(slug=slug) # The joke instance.
@@ -108,4 +105,3 @@ def vote(request, slug):
         'dislikes': dislikes
     }
     return JsonResponse(response) # Return object as JSON.
-
