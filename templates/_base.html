@@ -10,6 +10,7 @@
 {% block javascript %}{% endblock %}
 <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
 <title>{% block title %}{% endblock %} | Django Jokes</title>
+
 </head>
 <body>
 <header>
@@ -22,6 +23,7 @@
       aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+  
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto">
         <li class="nav-item active">
@@ -48,11 +50,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{% url 'my-account' %}">My Account</a>
-              <a class="dropdown-item"
-  href="{% url 'jokes:creator' user.username %}?order={{ order }}&direction={{ direction }}">
-  My Django Jokes
-</a>
-
+              <a class="dropdown-item" href="{% url 'jokes:creator' user.username %}?order={{ order }}&direction={{ direction }}">My Django Jokes</a>
               <div class="dropdown-divider"></div>
               <form method="post" action="{% url 'account_logout' %}">
                 {% csrf_token %}
@@ -62,9 +60,10 @@
           </li>
         {% endif %}
       </ul>
-      <form class="form-inline my-2 my-lg-0">
+      <form class="form-inline my-2 my-lg-0" action="{% url 'jokes:list' %}">
         <input class="form-control me-sm-2" type="search"
-        placeholder="Search" aria-label="Search">
+          placeholder="Search" aria-label="Search" name="q"
+          value="{{ request.GET.q }}">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
           Search
         </button>
@@ -72,18 +71,18 @@
     </div>
   </nav>
 </header>
-<main class="m-4 pb-5">
+<main class="m-4">
   {% if messages %}
-  <ul>
-    {% for message in messages %}
-    <div class="alert message{{ message.tags }} alert-dismissible" role="alert">
-        <strong>{{message}}</strong>
-        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
-      </div>
-    {% endfor %}
-  </ul>
-{% endif %}
-{% block main %}<h2>Welcome!</h2>{% endblock %}
+    <ul>
+      {% for message in messages %}
+      <div class="alert message{{ message.tags }} alert-dismissible" role="alert">
+          <strong>{{message}}</strong>
+          <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% block main %}<h2>Welcome!</h2>{% endblock %}
 </main>
 <footer class="fixed-bottom bg-light row">
     <div class="col">
