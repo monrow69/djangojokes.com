@@ -1,3 +1,7 @@
+body {
+  padding-bottom: 50px;
+}
+  
 footer {
   border-top: 1px solid darkgreen;
 }
@@ -8,10 +12,6 @@ header {
 
 h2 {
   font-style: italic;
-}
-
-body {
-  padding-bottom: 50px;
 }
 
 /* FORM STYLES */
@@ -53,4 +53,18 @@ label {
 .messageerror {
   background-color: pink;
   color: darkred;
+}
+
+/* RATING BAR */
+#rating-container {
+  background-color:silver;
+  border-radius: .5em;
+  max-width: 5rem;
+  padding: 2px;
+}
+
+#rating {
+  background-color: gold;
+  border-radius: .5em;
+  height: 10px;
 }

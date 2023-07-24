@@ -43,20 +43,21 @@
       {% with order=request.GET.order dir=request.GET.direction %}
       <tr>
         {% if order == 'joke' and dir == 'asc' %}
-        <th><a href="?order=joke&direction=desc">Joke</a></th>
+        <th><a href="?order=joke&direction=desc&q={{ request.GET.q }}">Joke</a></th>
         {% else %}
-        <th><a href="?order=joke&direction=asc">Joke</a></th>
+        <th><a href="?order=joke&direction=asc&q={{ request.GET.q }}">Joke</a></th>
         {% endif %}
         {% if order == 'category' and dir == 'asc' %}
-        <th><a href="?order=category&direction=desc">Category</a></th>
+        <th><a href="?order=category&direction=desc&q={{ request.GET.q }}">Category</a></th>
         {% else %}
-        <th><a href="?order=category&direction=asc">Category</a></th>
+        <th><a href="?order=category&direction=asc&q={{ request.GET.q }}">Category</a></th>
         {% endif %}
         {% if order == 'creator' and dir == 'asc' %}
-        <th><a href="?order=creator&direction=desc">Creator</a></th>
+        <th><a href="?order=creator&direction=desc&q={{ request.GET.q }}">Creator</a></th>
         {% else %}
-        <th><a href="?order=creator&direction=asc">Creator</a></th>
+        <th><a href="?order=creator&direction=asc&q={{ request.GET.q }}">Creator</a></th>
         {% endif %}
+        <th>Rating</th>
       </tr>
       {% endwith %}
     </thead>
@@ -68,15 +69,11 @@
         </td>
         <td>
           <a href="{% url 'jokes:category' joke.category.slug %}?order={{ order }}&direction={{ direction }}">
-          {{ joke.category.category }}
-        </a>
-          {{ joke.category.category }}<br>
+            {{ joke.category.category }}
+          </a><br>
           {% for tag in joke.tags.all %}
           <a href="{% url 'jokes:tag' tag.slug %}?order={{ order }}&direction={{ direction }}"
-  class="badge rounded-pill bg-secondary">{{ tag.tag }}</a>
-          <span class="badge rounded-pill bg-secondary">
-            {{ tag.tag }}
-          </span>
+            class="badge rounded-pill bg-secondary">{{ tag.tag }}</a>
           {% endfor %}
         </td>
         <td>
@@ -95,6 +92,14 @@
             </a>
           </small>
           {% endif %}
+        </td>
+        <td>
+          {% with votes=joke.votes %}
+          <div id="rating-container" title="{{ votes.rating }}">
+            <div id="rating" style="width:{% widthratio votes.rating 10 100 %}%;"></div>
+          </div>
+          ({{ votes.num_votes }} vote{{ votes.num_votes|pluralize }})
+          {% endwith %}
         </td>
       </tr>
       {% endfor %}
