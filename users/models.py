@@ -17,6 +17,8 @@ class CustomUser(AbstractUser):
     help_text='Image must be 200px by 200px.',
     validators=[validate_avatar]
 )
-    
-    def get_absolute_url(self):
+def __str__(self):
+    return f'{self.first_name} {self.last_name} ({self.username})'
+
+def get_absolute_url(self):
         return reverse('my-account')
